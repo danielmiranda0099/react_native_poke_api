@@ -4,7 +4,6 @@ import { PokemonCard } from "./PokemonCard";
 export function PokemonList({ pokemons, loadPokemons, isNext }) {
   const loadMore = () => {
     if (isNext && pokemons.length > 0) {
-      console.log("Cargando Mas Pokemons");
       loadPokemons();
     }
   };
@@ -18,7 +17,7 @@ export function PokemonList({ pokemons, loadPokemons, isNext }) {
       renderItem={({ item }) => <PokemonCard pokemon={item} />}
       contentContainerStyle={styles.flatListContentContainer}
       onEndReached={loadMore}
-      onEndReachedThreshold={0.2}
+      onEndReachedThreshold={0.9}
       ListFooterComponent={
         isNext && <ActivityIndicator size={"large"} style={styles.spinner} />
       }
