@@ -2,7 +2,8 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 import { object, string } from "yup";
-import { user } from "../../utils";
+import { useAuth } from "../../hooks";
+import { user, userDetails } from "../../utils";
 
 const initilaValuea = {
   username: "",
@@ -14,10 +15,10 @@ const validationSchema = {
   password: string().required("La Contraseña Es Obligatoria"),
 };
 
-
-
 export function LoginForm() {
   const [errorLogin, setErrorLogin] = useState(false);
+
+  const { login, auth } = useAuth();
 
   const handleSubmit = (fields) => {
     const { username, password } = fields;
@@ -27,7 +28,7 @@ export function LoginForm() {
       return;
     }
     setErrorLogin(false);
-    console.log("Login Correcto");
+    login(userDetails);
   };
 
   const formik = useFormik({
