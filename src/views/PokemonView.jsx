@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 import { getPokemonById } from "../api";
-import { Header, Stats, Type } from "../components";
+import { Favorite, Header, Stats, Type } from "../components";
+import { useAuth } from "../hooks";
 
 export function PokemonView({ route: { params }, navigation }) {
   const [pokemon, setPokemon] = useState(null);
+
+  const {auth} = useAuth();
 
   const getPokemon = async () => {
     try {
@@ -19,6 +22,12 @@ export function PokemonView({ route: { params }, navigation }) {
   useEffect(() => {
     getPokemon();
   }, [params]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => ( (auth && pokemon) &&  <Favorite id={pokemon.id} />)
+    });
+  }, [navigation, auth, pokemon]);
 
   if (!pokemon) {
     return (
