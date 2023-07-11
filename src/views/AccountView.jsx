@@ -1,10 +1,8 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import { View } from "react-native";
+import { LoginForm, UserDetail } from "../components/auth";
 
 export function AccountView() {
-  return (
-    <View>
-      <Text>Account</Text>
-    </View>
-  )
+  const auth = null;
+
+  return <View>{auth ? <UserDetail /> : <LoginForm /> }</View>;
 }
