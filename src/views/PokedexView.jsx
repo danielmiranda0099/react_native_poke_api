@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { getPokemonByUrl, getPokemons } from "../api";
 import { PokemonList } from "../components";
+import { formattingPokemon } from "../utils";
 
 export function PokedexView() {
   const [pokemons, setPokemons] = useState([]);
@@ -16,13 +17,8 @@ export function PokedexView() {
     const pokemonsArray = [];
     for await (const pokemon of response.results) {
       const pokemonDetail = await getPokemonByUrl(pokemon.url);
-      pokemonsArray.push({
-        id: pokemonDetail.id,
-        name: pokemonDetail.name,
-        type: pokemonDetail.types[0].type.name,
-        order: pokemonDetail.order,
-        image: pokemonDetail.sprites.other["official-artwork"].front_default,
-      });
+      const pokemonFormated = formattingPokemon(pokemonDetail);
+      pokemonsArray.push(pokemonFormated);
     }
     setPokemons([...pokemons, ...pokemonsArray]);
   };
